@@ -1,7 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { Patient, ClinicalRecord, VitalSigns, LVADParameters } from '../types';
-// Removed unused import causing compilation error
 import { 
   LineChart, 
   Line, 
@@ -185,13 +184,17 @@ const PatientDetails: React.FC<PatientDetailsProps> = ({ patient, onAddRecord, o
                 <LineChart data={chartData}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f1f5f9" />
                   <XAxis dataKey="time" axisLine={false} tickLine={false} tick={{fill: '#94a3b8', fontSize: 10}} />
-                  <YAxis axisLine={false} tickLine={false} tick={{fill: '#94a3b8', fontSize: 10}} />
+                  {/* Left Axis for INR */}
+                  <YAxis yAxisId="left" axisLine={false} tickLine={false} tick={{fill: '#3b82f6', fontSize: 10}} width={30} />
+                  {/* Dedicated Right Axis for PI */}
+                  <YAxis yAxisId="right" orientation="right" axisLine={false} tickLine={false} tick={{fill: '#8b5cf6', fontSize: 10}} width={30} />
                   <Tooltip 
                     contentStyle={{borderRadius: '12px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)'}}
                   />
                   <Legend iconType="circle" />
-                  <Line type="step" dataKey="inr" stroke="#3b82f6" strokeWidth={3} dot={{r: 6}} name={t.charts.inrLegend} />
-                  <Line type="monotone" dataKey="pi" stroke="#6366f1" strokeWidth={3} dot={{r: 4}} name={t.charts.piLegend} />
+                  <Line yAxisId="left" type="step" dataKey="inr" stroke="#3b82f6" strokeWidth={3} dot={{r: 6}} activeDot={{r: 8}} name={t.charts.inrLegend} />
+                  {/* Dedicated Trend Line for PI */}
+                  <Line yAxisId="right" type="monotone" dataKey="pi" stroke="#8b5cf6" strokeWidth={4} dot={{r: 4, fill: '#8b5cf6'}} activeDot={{ r: 8 }} name={t.charts.piLegend} />
                 </LineChart>
               </ResponsiveContainer>
             </div>
